@@ -4,6 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://cfok56selhbto" path="res://YellowStars.png" id="2_lquwl"]
 [ext_resource type="Texture2D" uid="uid://bv8kbqpr1an0q" path="res://BlueStars.png" id="3_7mycd"]
 [ext_resource type="Texture2D" uid="uid://cywuns7s43l55" path="res://PinkStars.png" id="4_272bh"]
+[ext_resource type="Texture2D" uid="uid://bb4s1hpvluum5" path="res://BatShooting16.png" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://cptqxdgsn8jkj" path="res://player.gd" id="5_272bh"]
+[ext_resource type="Texture2D" uid="uid://b7snduyiv6sim" path="res://BatStanding16.png" id="6_272bh"]
 
 [sub_resource type="Animation" id="Animation_1bvp3"]
 length = 0.001
@@ -91,6 +94,28 @@ _data = {
 &"Twinkle": SubResource("Animation_lquwl")
 }
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_0hulw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_7mycd")
+}],
+"loop": 1,
+"name": &"fly",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_272bh")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wbicb"]
+radius = 20.0
+
 [node name="Main" type="Node2D" unique_id=2006827365]
 
 [node name="Background" type="TextureRect" parent="." unique_id=701649488]
@@ -118,3 +143,14 @@ texture = ExtResource("4_272bh")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=672198558]
 libraries/ = SubResource("AnimationLibrary_7mycd")
 autoplay = &"Twinkle"
+
+[node name="Player" type="Area2D" parent="." unique_id=1414290658]
+script = ExtResource("5_272bh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=1544180613]
+sprite_frames = SubResource("SpriteFrames_0hulw")
+animation = &"fly"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1882553227]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_wbicb")
