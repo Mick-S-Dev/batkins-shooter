@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://2ioxtn44wm1g"]
+
+[ext_resource type="Texture2D" uid="uid://b4bfq5mj5w7uf" path="res://Background.png" id="1_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://cfok56selhbto" path="res://YellowStars.png" id="2_lquwl"]
+[ext_resource type="Texture2D" uid="uid://bv8kbqpr1an0q" path="res://BlueStars.png" id="3_7mycd"]
+[ext_resource type="Texture2D" uid="uid://cywuns7s43l55" path="res://PinkStars.png" id="4_272bh"]
+
+[sub_resource type="Animation" id="Animation_1bvp3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("YellowStars:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BlueStars:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.23529412)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PinkStars:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.47058824)]
+}
+
+[sub_resource type="Animation" id="Animation_lquwl"]
+resource_name = "Twinkle"
+length = 4.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("YellowStars:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.12, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.23529412), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BlueStars:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0009999999, 2.1333334, 4.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.23529412), Color(1, 1, 1, 1), Color(1, 1, 1, 0.23568279)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PinkStars:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.5, 3.03, 4.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.47058824), Color(1, 1, 1, 0.23529412), Color(1, 1, 1, 1), Color(1, 1, 1, 0.4705882)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7mycd"]
+_data = {
+&"RESET": SubResource("Animation_1bvp3"),
+&"Twinkle": SubResource("Animation_lquwl")
+}
+
+[node name="Main" type="Node2D" unique_id=2006827365]
+
+[node name="Background" type="TextureRect" parent="." unique_id=701649488]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_1bvp3")
+
+[node name="YellowStars" type="TextureRect" parent="." unique_id=535437075]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_lquwl")
+
+[node name="BlueStars" type="TextureRect" parent="." unique_id=1652036224]
+modulate = Color(1, 1, 1, 0.23529412)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_7mycd")
+
+[node name="PinkStars" type="TextureRect" parent="." unique_id=1840498427]
+modulate = Color(1, 1, 1, 0.47058824)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("4_272bh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=672198558]
+libraries/ = SubResource("AnimationLibrary_7mycd")
+autoplay = &"Twinkle"
