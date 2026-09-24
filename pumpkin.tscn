@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://uiaxj4s3lkwd"]
+
+[ext_resource type="Script" uid="uid://cdiuvc6uy77pa" path="res://pumpkin.gd" id="1_cq8q5"]
+[ext_resource type="Texture2D" uid="uid://dk1cbuwnorfws" path="res://Pumpkin32.png" id="2_1lfrr"]
+[ext_resource type="Texture2D" uid="uid://dk15qo27qtghs" path="res://JackOLantern32.png" id="3_6n07b"]
+[ext_resource type="Texture2D" uid="uid://ceppefsli2vwk" path="res://JackOLantern32Dark.png" id="4_n8lyn"]
+[ext_resource type="Texture2D" uid="uid://cjrsuhv6gphdf" path="res://Pumpkin32Squish.png" id="5_6ad06"]
+[ext_resource type="AudioStream" uid="uid://dt3v8a2yuenoc" path="res://Cackle2.wav" id="6_6n07b"]
+[ext_resource type="AudioStream" uid="uid://lcn5gljwpc56" path="res://Squish2.wav" id="7_n8lyn"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_piquv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1lfrr")
+}],
+"loop": 1,
+"name": &"falling",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_6n07b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_n8lyn")
+}],
+"loop": 1,
+"name": &"jackolantern",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_6ad06")
+}],
+"loop": 1,
+"name": &"squished",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cq8q5"]
+radius = 18.439089
+
+[node name="Pumpkin" type="Area2D" unique_id=492694528]
+script = ExtResource("1_cq8q5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1768962755]
+z_index = 3
+sprite_frames = SubResource("SpriteFrames_piquv")
+animation = &"jackolantern"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1611067849]
+shape = SubResource("CircleShape2D_cq8q5")
+
+[node name="CacklePlayer" type="AudioStreamPlayer2D" parent="." unique_id=1655626145]
+stream = ExtResource("6_6n07b")
+volume_db = 6.972
+pitch_scale = 1.55
+
+[node name="SquishPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1966219732]
+stream = ExtResource("7_n8lyn")
+volume_db = 6.0
+pitch_scale = 0.7

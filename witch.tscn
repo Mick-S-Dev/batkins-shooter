@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://boidvmj3q5fqn"]
+
+[ext_resource type="Script" uid="uid://dwd7dsymlpfew" path="res://witch.gd" id="1_08n5d"]
+[ext_resource type="Texture2D" uid="uid://ccwefx457fj2a" path="res://WitchDarkEyesNoBorderNewSmile.png" id="2_08n5d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_piquv"]
+size = Vector2(34, 31)
+
+[node name="Witch" type="Area2D" unique_id=910680479]
+script = ExtResource("1_08n5d")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=18097178]
+position = Vector2(50, 0)
+texture = ExtResource("2_08n5d")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1248677979]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839014876]
+position = Vector2(50, 0.5)
+shape = SubResource("RectangleShape2D_piquv")

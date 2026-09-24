@@ -1,12 +1,16 @@
 [gd_scene format=3 uid="uid://2ioxtn44wm1g"]
 
 [ext_resource type="Texture2D" uid="uid://b4bfq5mj5w7uf" path="res://Background.png" id="1_1bvp3"]
+[ext_resource type="Script" uid="uid://caiprrp2svp1a" path="res://main.gd" id="1_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://cfok56selhbto" path="res://YellowStars.png" id="2_lquwl"]
 [ext_resource type="Texture2D" uid="uid://bv8kbqpr1an0q" path="res://BlueStars.png" id="3_7mycd"]
 [ext_resource type="Texture2D" uid="uid://cywuns7s43l55" path="res://PinkStars.png" id="4_272bh"]
 [ext_resource type="Texture2D" uid="uid://bb4s1hpvluum5" path="res://BatShooting16.png" id="5_7mycd"]
 [ext_resource type="Script" uid="uid://cptqxdgsn8jkj" path="res://player.gd" id="5_272bh"]
 [ext_resource type="Texture2D" uid="uid://b7snduyiv6sim" path="res://BatStanding16.png" id="6_272bh"]
+[ext_resource type="AudioStream" uid="uid://ddtr2t30cieq0" path="res://BatkinsMp3.mp3" id="9_kek77"]
+[ext_resource type="FontFile" uid="uid://cankx654dj16i" path="res://Silkscreen-Bold.ttf" id="10_4c57u"]
+[ext_resource type="Texture2D" uid="uid://dcw162t32qhwy" path="res://SquandwichForBatkins.png" id="11_efxa6"]
 
 [sub_resource type="Animation" id="Animation_1bvp3"]
 length = 0.001
@@ -114,9 +118,12 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wbicb"]
-radius = 20.0
+radius = 18.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_piquv"]
 
 [node name="Main" type="Node2D" unique_id=2006827365]
+script = ExtResource("1_ycdy4")
 
 [node name="Background" type="TextureRect" parent="." unique_id=701649488]
 offset_right = 40.0
@@ -145,6 +152,7 @@ libraries/ = SubResource("AnimationLibrary_7mycd")
 autoplay = &"Twinkle"
 
 [node name="Player" type="Area2D" parent="." unique_id=1414290658]
+z_index = 10
 script = ExtResource("5_272bh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=1544180613]
@@ -152,5 +160,110 @@ sprite_frames = SubResource("SpriteFrames_0hulw")
 animation = &"fly"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1882553227]
-position = Vector2(0, 3)
+position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_wbicb")
+
+[node name="Timer" type="Timer" parent="." unique_id=671191657]
+wait_time = 2.0
+autostart = true
+
+[node name="BGMPlayer" type="AudioStreamPlayer2D" parent="." unique_id=550809060]
+stream = ExtResource("9_kek77")
+autoplay = true
+
+[node name="YayPumpkins" type="Label" parent="." unique_id=1439750052]
+visible = false
+custom_minimum_size = Vector2(200, 80)
+custom_maximum_size = Vector2(200, 80)
+offset_left = 56.0
+offset_top = 48.0
+offset_right = 256.0
+offset_bottom = 128.0
+theme_override_colors/font_color = Color(1, 0.53333336, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 9
+theme_override_fonts/font = ExtResource("10_4c57u")
+theme_override_styles/normal = SubResource("StyleBoxTexture_piquv")
+text = "Yay! 9 Pumpkins Converted"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="LoseLabel" type="Label" parent="." unique_id=813139518]
+visible = false
+custom_minimum_size = Vector2(150, 80)
+custom_maximum_size = Vector2(150, 80)
+offset_left = 81.0
+offset_top = 45.0
+offset_right = 231.0
+offset_bottom = 125.0
+theme_override_colors/font_color = Color(0, 0.89411765, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 9
+theme_override_fonts/font = ExtResource("10_4c57u")
+theme_override_styles/normal = SubResource("StyleBoxTexture_piquv")
+text = "Oh No!
+Too Much Squish!
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="GameOverLabel" type="Label" parent="." unique_id=1466208334]
+visible = false
+custom_minimum_size = Vector2(150, 80)
+custom_maximum_size = Vector2(150, 80)
+offset_left = 88.0
+offset_top = 39.0
+offset_right = 238.0
+offset_bottom = 119.0
+theme_override_colors/font_color = Color(0.99607843, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 9
+theme_override_fonts/font = ExtResource("10_4c57u")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxTexture_piquv")
+text = "Game Over"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="FasterLabel" type="Label" parent="." unique_id=1977859233]
+visible = false
+custom_minimum_size = Vector2(150, 80)
+custom_maximum_size = Vector2(150, 80)
+offset_left = 79.0
+offset_top = 52.0
+offset_right = 229.0
+offset_bottom = 132.0
+theme_override_colors/font_color = Color(0.69277334, 0.37831956, 0.9744666, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 9
+theme_override_fonts/font = ExtResource("10_4c57u")
+theme_override_styles/normal = SubResource("StyleBoxTexture_piquv")
+text = "And now Faster!
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Start" type="Button" parent="." unique_id=1353378964]
+custom_minimum_size = Vector2(150, 80)
+custom_maximum_size = Vector2(150, 80)
+offset_left = 86.0
+offset_top = 39.0
+offset_right = 236.0
+offset_bottom = 119.0
+theme_override_colors/font_color = Color(1, 0.6000579, 0.7157608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 9
+theme_override_fonts/font = ExtResource("10_4c57u")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxTexture_piquv")
+text = "Start
+"
+autowrap_mode = 2
+
+[node name="Logo" type="Sprite2D" parent="." unique_id=445718703]
+position = Vector2(160, 101)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("11_efxa6")
+
+[node name="WitchTimer" type="Timer" parent="." unique_id=1252268996]
+one_shot = true
