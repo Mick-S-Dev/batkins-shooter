@@ -11,6 +11,15 @@
 [ext_resource type="AudioStream" uid="uid://ddtr2t30cieq0" path="res://BatkinsMp3.mp3" id="9_kek77"]
 [ext_resource type="FontFile" uid="uid://cankx654dj16i" path="res://Silkscreen-Bold.ttf" id="10_4c57u"]
 [ext_resource type="Texture2D" uid="uid://dcw162t32qhwy" path="res://SquandwichForBatkins.png" id="11_efxa6"]
+[ext_resource type="Texture2D" uid="uid://c5qbb7qheyocs" path="res://NewLeft.png" id="12_w48qg"]
+[ext_resource type="Texture2D" uid="uid://bnyxd5dqm6t41" path="res://Newright.png" id="13_vivmo"]
+[ext_resource type="Texture2D" uid="uid://s3n3wbjv82kf" path="res://NewLeftTouch.png" id="13_yaehf"]
+[ext_resource type="Texture2D" uid="uid://rmt84ggandqu" path="res://WandRelax.png" id="14_vivmo"]
+[ext_resource type="Texture2D" uid="uid://ddrycsl4xtbf2" path="res://WandFire.png" id="15_2cqfq"]
+[ext_resource type="Texture2D" uid="uid://csqqvii164p54" path="res://NewrightTouch.png" id="15_074og"]
+[ext_resource type="AudioStream" uid="uid://oo0gx0ysn2bc" path="res://halloween_music.wav" id="18_82xsv"]
+[ext_resource type="Texture2D" uid="uid://bcis0303y85ox" path="res://DarkPumpkin.png" id="19_getpj"]
+[ext_resource type="Texture2D" uid="uid://b861n4fhwr2av" path="res://LightPumpkin.png" id="20_ryguw"]
 
 [sub_resource type="Animation" id="Animation_1bvp3"]
 length = 0.001
@@ -98,6 +107,73 @@ _data = {
 &"Twinkle": SubResource("Animation_lquwl")
 }
 
+[sub_resource type="Shader" id="Shader_dg77c"]
+code = "shader_type canvas_item;
+
+// Target colors to identify
+uniform vec4 target_body_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);     // Pure black body
+uniform vec4 target_outline_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);  // Pure white outline
+// Hex #99e550 converted to normalized vec4(153/255, 229/255, 80/255, 1.0)
+uniform vec4 target_eye_color : source_color = vec4(0.60, 0.90, 0.31, 1.0);   
+
+// Body color passed from GDScript
+uniform vec4 body_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+// Detection thresholds
+uniform float body_threshold : hint_range(0.0, 1.0) = 0.4;
+uniform float outline_threshold : hint_range(0.0, 1.0) = 0.3;
+uniform float eye_threshold : hint_range(0.0, 1.0) = 0.35;
+
+void fragment() {
+    vec4 current_color = texture(TEXTURE, UV);
+    
+    if (current_color.a > 0.01) {
+        
+        // 1. Check if the body is currently recolored (i.e. not default black)
+        bool is_neon = distance(body_color.rgb, vec3(0.0)) > 0.05;
+        
+        // 2. FIRST: Check for lime green eyes (#99e550)
+        if (distance(current_color.rgb, target_eye_color.rgb) < eye_threshold) {
+            if (is_neon) {
+                COLOR = vec4(0.0, 0.0, 0.0, current_color.a); // Black eyes for neon
+            } else {
+                COLOR = current_color; // Keep #99e550 eyes for Level 1
+            }
+        } 
+        // 3. Detect and recolor the BODY
+        else if (distance(current_color.rgb, target_body_color.rgb) < body_threshold) {
+            COLOR = vec4(body_color.rgb, current_color.a);
+        } 
+        // 4. Detect and recolor the OUTLINE (dark complementary shade when neon)
+        else if (distance(current_color.rgb, target_outline_color.rgb) < outline_threshold) {
+            if (is_neon) {
+                vec3 complement = vec3(1.0) - body_color.rgb;
+                vec3 dark_complement = complement * 0.35;
+                COLOR = vec4(dark_complement, current_color.a);
+            } else {
+                COLOR = current_color; // Classic white outline on Level 1
+            }
+        } 
+        // 5. Unmatched detail pixels stay original
+        else {
+            COLOR = current_color;
+        }
+        
+    } else {
+        COLOR = current_color;
+    }
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_efxa6"]
+shader = SubResource("Shader_dg77c")
+shader_parameter/target_body_color = Color(0, 0, 0, 1)
+shader_parameter/target_outline_color = Color(1, 1, 1, 1)
+shader_parameter/target_eye_color = Color(0.6, 0.8980392, 0.3137255, 1)
+shader_parameter/body_color = Color(0, 0, 0, 1)
+shader_parameter/body_threshold = 0.4
+shader_parameter/outline_threshold = 0.3
+shader_parameter/eye_threshold = 0.4
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_0hulw"]
 animations = [{
 "frames": [{
@@ -121,6 +197,20 @@ animations = [{
 radius = 18.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_piquv"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_piquv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_getpj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ryguw")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Main" type="Node2D" unique_id=2006827365]
 script = ExtResource("1_ycdy4")
@@ -156,6 +246,7 @@ z_index = 10
 script = ExtResource("5_272bh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=1544180613]
+material = SubResource("ShaderMaterial_efxa6")
 sprite_frames = SubResource("SpriteFrames_0hulw")
 animation = &"fly"
 
@@ -267,3 +358,62 @@ texture = ExtResource("11_efxa6")
 
 [node name="WitchTimer" type="Timer" parent="." unique_id=1252268996]
 one_shot = true
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1724330300]
+
+[node name="TouchControls" type="Control" parent="UI" unique_id=1919043295]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BtnLeft" type="TouchScreenButton" parent="UI/TouchControls" unique_id=1002100149]
+position = Vector2(0, 100)
+texture_normal = ExtResource("12_w48qg")
+texture_pressed = ExtResource("13_yaehf")
+action = "ui_left"
+
+[node name="BtnRight" type="TouchScreenButton" parent="UI/TouchControls" unique_id=1156924590]
+z_index = 1
+position = Vector2(288, 100)
+texture_normal = ExtResource("13_vivmo")
+texture_pressed = ExtResource("15_074og")
+action = "ui_right"
+
+[node name="BtnAction" type="TouchScreenButton" parent="UI/TouchControls" unique_id=724500407]
+position = Vector2(270, 87)
+rotation = -0.5602507
+texture_normal = ExtResource("14_vivmo")
+texture_pressed = ExtResource("15_2cqfq")
+action = "ui_accept"
+
+[node name="LevelLabel" type="Label" parent="UI" unique_id=843904323]
+offset_left = 8.0
+offset_top = 4.0
+offset_right = 89.0
+offset_bottom = 27.0
+theme_override_colors/font_color = Color(0.9866746, 0.8833288, 0.20316848, 1)
+theme_override_colors/font_outline_color = Color(0.019607844, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("10_4c57u")
+theme_override_font_sizes/font_size = 14
+text = "Level: 1"
+
+[node name="HalloweenMusic" type="AudioStreamPlayer" parent="." unique_id=1096275692]
+stream = ExtResource("18_82xsv")
+
+[node name="GiantPumpkin" type="AnimatedSprite2D" parent="." unique_id=1126066384]
+visible = false
+z_index = 100
+sprite_frames = SubResource("SpriteFrames_piquv")
+
+[node name="PresentsLabel" type="Label" parent="." unique_id=763276615]
+offset_right = 208.0
+offset_bottom = 45.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("10_4c57u")
+text = "Presents: 
+The Batkins Game"
+autowrap_mode = 2

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tv5b62xok3tw"
-path="res://.godot/imported/WitchDarkEyes.png-93eb25537ec40ea00757ae48b119ac78.ctex"
+uid="uid://csqqvii164p54"
+path="res://.godot/imported/NewrightTouch.png-f63337e567a863bda640f9b5160c0600.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://WitchDarkEyes.png"
-dest_files=["res://.godot/imported/WitchDarkEyes.png-93eb25537ec40ea00757ae48b119ac78.ctex"]
+source_file="res://NewrightTouch.png"
+dest_files=["res://.godot/imported/NewrightTouch.png-f63337e567a863bda640f9b5160c0600.ctex"]
 
 [params]
 

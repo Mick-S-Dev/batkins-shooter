@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dy88jbpvrwab6"
-path="res://.godot/imported/WitchDarkEyesNoBorder.png-a0f2f29b142841e59d0f58dea4916b1f.ctex"
+uid="uid://c5qbb7qheyocs"
+path="res://.godot/imported/NewLeft.png-6b38b0fb9afeef7d79414cd02bdf75aa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://WitchDarkEyesNoBorder.png"
-dest_files=["res://.godot/imported/WitchDarkEyesNoBorder.png-a0f2f29b142841e59d0f58dea4916b1f.ctex"]
+source_file="res://NewLeft.png"
+dest_files=["res://.godot/imported/NewLeft.png-6b38b0fb9afeef7d79414cd02bdf75aa.ctex"]
 
 [params]
 

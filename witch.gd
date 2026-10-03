@@ -9,7 +9,7 @@ var max_y: float = 135.0 # Top 75% of 180px viewport height
 
 # Off-screen boundaries
 var start_x_right: float = 360.0
-var end_x_left: float = -100.0
+var end_x_left: float = -130.0
 
 enum ScaleMode { GROW, SHRINK }
 var current_scale_mode: ScaleMode = ScaleMode.SHRINK
