@@ -2,3 +2,4 @@
 /android/
 *.translation
 .DS_Store
+build/
